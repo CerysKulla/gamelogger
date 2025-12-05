@@ -1,9 +1,9 @@
 package Gamelogger.gamelogger.controller;
 
 import Gamelogger.gamelogger.entity.Game;
-import Gamelogger.gamelogger.service.GameService;
+import Gamelogger.gamelogger.response.APIResponse;
+import Gamelogger.gamelogger.service.GameRestAPIService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,46 +13,14 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/game")
 public class GameRestController {
 
-    /*Subject to change im not sure kasi how restapi works*/
-
     @Autowired
-    GameService gameService;
+    GameRestAPIService gameRestAPIService;
 
     @GetMapping("/list")
-    public List<Game> getGames(
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String developer) {
-        if (title != null) {
-            return gameService.getGamesByTitle(title);
-        } else if (developer != null) {
-            return gameService.getGameFromDeveloper(developer);
-        } else {
-            return gameService.getGames();
-        }
+    public ResponseEntity<?> getGameList() {
+        APIResponse<List<Game>> api = new APIResponse<>("Game List", 200, gameRestAPIService.getGames());
+        return ResponseEntity.ok(api);
     }
-
-    @PostMapping("/add")
-    public ResponseEntity<Game> addGame(@RequestBody Game game){
-        Game createdGame = gameService.addGame(game);
-        return new ResponseEntity<>(createdGame, HttpStatus.CREATED);
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Game> updateGame(@RequestBody Game game){
-        Game resultGame = gameService.updateGame(game);
-        if (resultGame != null) {
-            return new ResponseEntity<>(resultGame, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePlayer(@PathVariable Integer gameID) {
-        gameService.deleteGame(gameID);
-        return new ResponseEntity<>("Game deleted successfully", HttpStatus.OK);
-    }
-
 
 
 }
