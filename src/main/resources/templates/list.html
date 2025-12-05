@@ -2,9 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Game Backlog List</title>
 </head>
 <body>
 
+<h1> List of Games</h1>
+
+<!--  Table for searching game title -->
+<form th:action="@{/list}" method="get">
+    <input type="text" name="keyword" placeholder="Search game title" th:value="${keyword}"/>
+
+    <button type="submit">Search</button>
+</form>
+
+
+<!--  Table for displaying  -->
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Release Date</th>
+        <th>Developer</th>
+        <th>Description</th>
+        <th>Platform</th>
+        <th>Hours Played</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tr th:each="game, iterStat : ${games}">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${game.title}"></td>
+        <td th:text="${game.description}"></td>
+        <td th:text="${#dates.format(game.releaseDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${game.developer}"></td>
+        <td th:text="${game.platform}"></td>
+        <td th:text="${game.hoursPlayed}"></td>
+
+<!--    buttons for adding and deleting    -->
+        <td ><button>Edit game</button></td>
+        <td ><a th:href="@{/delete/{id}(id=${game.gameID})}" style="text-decoration: none"><button type="button">Delete game</button></a></td>
+    </tr>
+</table>
+
+<a th:href="@{/add}"><button>Add Game</button></a>
+
 </body>
 </html>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 10px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+>

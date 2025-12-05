@@ -3,6 +3,8 @@ package Gamelogger.gamelogger.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,6 +25,8 @@ public class Game {
     private String title;
 
     @Column(name = "release_date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "MM-dd-yyy")
     private Date releaseDate;
 
     @Column(name = "developer", length = 255)

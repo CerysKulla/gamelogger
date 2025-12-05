@@ -6,5 +6,47 @@
 </head>
 <body>
 
+<h1>add</h1>
+
+<!--Form contents-->
+<div>
+    <form th:action="@{add}" th:object="${game}" method="post">
+        <div class="form-content">
+            <label>Game Title: </label>
+            <input type="text" placeholder="Game Title" name="title" th:field="*{title}"/>
+
+
+            <label>Release Date: </label>
+            <input type="date" placeholder="mm-dd-yyyy" name="release-date" th:field="*{releaseDate}"/>
+
+            <label>Developer: </label>
+            <input type="text" name="dev" th:field="*{developer}"/>
+
+            <label>Description: </label>
+            <input type="text" name="description" th:field="*{description}"/>
+
+            <label>Platform: </label>
+            <input type="text" name="platform" th:field="*{platform}"/>
+
+            <label>Hours Played: </label>
+            <input type="number" name="hours-played" th:field="*{hoursPlayed}"/>
+
+            <button type="submit">Add game</button>
+        </div>
+    </form>
+</div>
+
+
 </body>
 </html>
+
+
+<!--Styling-->
+<style>
+    .form-content{
+        max-width: 600px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+</style>

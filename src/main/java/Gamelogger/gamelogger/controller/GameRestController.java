@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/game")
-public class GameController {
+public class GameRestController {
 
     /*Subject to change im not sure kasi how restapi works*/
 
