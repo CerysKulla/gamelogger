@@ -1,52 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add game</title>
+    <title>Add Game</title>
+
+    <!-- Import retro video game font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        /* fade-in animation for whole page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            height: 100vh; /* full viewport height */
+            display: flex;
+            flex-direction: column;  /* stack heading + form */
+            justify-content: center; /* vertical center */
+            align-items: center;     /* horizontal center */
+            color: #fff;
+            background: url('https://i.pinimg.com/originals/d8/52/ba/d852ba517d76375bcdf803320ee20033.gif') no-repeat center center fixed;
+            background-size: cover;
+
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* heading in video game font */
+        h1 {
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 40px; /* bigger heading */
+            color: #fff;
+            margin-bottom: 30px;
+            text-shadow: 4px 4px 0px black, 6px 6px 0px #0078d7;
+        }
+
+        /* bigger form container centered */
+        .form-content {
+            max-width: 800px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 30px;
+            border-radius: 12px;
+            border: 3px solid black;
+        }
+
+        label {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"] {
+            padding: 14px;
+            border: 3px solid black;
+            border-radius: 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* add Game button styling */
+        button {
+            grid-column: span 2;
+            margin-top: 30px;
+            padding: 24px 50px;
+            font-size: 22px;
+            font-family: 'Press Start 2P', cursive;
+            background-color: #28a745;
+            color: #fff;
+            border: 3px solid black;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px black;
+
+            opacity: 0;
+            animation: fadeInButton 1.5s ease-in forwards;
+            animation-delay: 2s; /* delayed fade-in only */
+        }
+
+        @keyframes fadeInButton {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        button:hover {
+            background-color: #708238;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
 
-<h1>add</h1>
+<h1>ADD YOUR GAME</h1>
 
-<!--Form contents-->
-<div>
-    <form th:action="@{add}" th:object="${game}" method="post">
-        <div class="form-content">
-            <label>Game Title: </label>
-            <input type="text" placeholder="Game Title" name="title" th:field="*{title}"/>
+<!--form contents-->
+<form th:action="@{/add}" th:object="${game}" method="post">
+    <div class="form-content">
+        <label>Game Title: </label>
+        <input type="text" placeholder="Game Title" name="title" th:field="*{title}"/>
 
+        <label>Release Date: </label>
+        <input type="date" placeholder="mm-dd-yyyy" name="release-date" th:field="*{releaseDate}"/>
 
-            <label>Release Date: </label>
-            <input type="date" placeholder="mm-dd-yyyy" name="release-date" th:field="*{releaseDate}"/>
+        <label>Developer: </label>
+        <input type="text" name="dev" th:field="*{developer}"/>
 
-            <label>Developer: </label>
-            <input type="text" name="dev" th:field="*{developer}"/>
+        <label>Description: </label>
+        <input type="text" name="description" th:field="*{description}"/>
 
-            <label>Description: </label>
-            <input type="text" name="description" th:field="*{description}"/>
+        <label>Platform: </label>
+        <input type="text" name="platform" th:field="*{platform}"/>
 
-            <label>Platform: </label>
-            <input type="text" name="platform" th:field="*{platform}"/>
+        <label>Hours Played: </label>
+        <input type="number" name="hours-played" th:field="*{hoursPlayed}"/>
 
-            <label>Hours Played: </label>
-            <input type="number" name="hours-played" th:field="*{hoursPlayed}"/>
-
-            <button type="submit">Add game</button>
-        </div>
-    </form>
-</div>
-
+        <button type="submit">Add Game</button>
+    </div>
+</form>
 
 </body>
 </html>
-
-
-<!--Styling-->
-<style>
-    .form-content{
-        max-width: 600px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-</style>

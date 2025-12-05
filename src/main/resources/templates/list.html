@@ -3,72 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <title>Game Backlog List</title>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        /* fade-in animation for whole page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #fff;
+
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in forwards;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* heading in video game font */
+        h1 {
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 32px;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 4px 4px 0px black, 6px 6px 0px #0078d7;
+        }
+
+
+        .overlay {
+            background: rgba(0,0,0,0.6);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        /* search bar */
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            width: 300px;
+            border: 3px solid black;
+            border-radius: 8px;
+            outline: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            background-color: #fff;
+            color: #000;
+        }
+
+        button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            padding: 14px 22px;
+            border: 3px solid black;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0px black;
+        }
+
+        /* default button (Search) */
+        form button {
+            background-color: #0078d7;
+            color: white;
+        }
+
+        form button:hover {
+            background-color: #005a9e;
+            transform: scale(1.05);
+        }
+
+        /* table styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid black;
+        }
+
+        th {
+            background-color: #0078d7;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid black;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid black;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+        }
+
+        tr:hover {
+            background-color: #f1f9ff;
+        }
+
+        /* Edit button */
+        .edit-btn {
+            background-color: #D79334;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .edit-btn:hover {
+            background-color: #DAA520;
+            transform: scale(1.1);
+        }
+
+        /* delete button */
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #a71d2a;
+            transform: scale(1.1);
+        }
+
+        /* add game button */
+        .add-btn {
+            display: block;
+            margin: 40px auto;
+            padding: 20px 40px;
+            font-size: 20px;
+            font-family: 'Press Start 2P', cursive;
+            background-color: #28a745;
+            color: #fff;
+            border: 3px solid black;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px black;
+
+            opacity: 0;
+            animation: fadeInButton 1.5s ease-in forwards;
+            animation-delay: 2s;
+        }
+
+        @keyframes fadeInButton {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .add-btn:hover {
+            background-color: #708238;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
 
-<h1> List of Games</h1>
+<div class="overlay">
+    <h1>Game Backlog List</h1>
 
-<!--  Table for searching game title -->
-<form th:action="@{/list}" method="get">
-    <input type="text" name="keyword" placeholder="Search game title" th:value="${keyword}"/>
+    <!-- search bar -->
+    <form th:action="@{/list}" method="get">
+        <input type="text" name="keyword" placeholder="Search game title" th:value="${keyword}"/>
+        <button type="submit">Search</button>
+    </form>
 
-    <button type="submit">Search</button>
-</form>
+    <!-- table -->
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Release Date</th>
+            <th>Developer</th>
+            <th>Description</th>
+            <th>Platform</th>
+            <th>Hours Played</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game, iterStat : ${games}">
+            <td th:text="${iterStat.count}"></td>
+            <td th:text="${game.title}"></td>
+            <td th:text="${game.releaseDate != null ? #dates.format(game.releaseDate, 'yyyy-MM-dd') : ''}"></td>
+            <td th:text="${game.developer}"></td>
+            <td th:text="${game.description}"></td>
+            <td th:text="${game.platform}"></td>
+            <td th:text="${game.hoursPlayed}"></td>
+            <td>
+                <form th:action="@{/edit/{id}(id=${game.gameID})}" method="get" style="display:inline">
+                    <button type="submit" class="edit-btn">Edit</button>
+                </form>
+                <form th:action="@{/delete/{id}(id=${game.gameID})}" method="get" style="display:inline">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
+<a th:href="@{/add}"><button class="add-btn">Add Game</button></a>
 
-<!--  Table for displaying  -->
-<table>
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Title</th>
-        <th>Release Date</th>
-        <th>Developer</th>
-        <th>Description</th>
-        <th>Platform</th>
-        <th>Hours Played</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="game, iterStat : ${games}">
-        <td th:text="${iterStat.count}"></td>
-        <td th:text="${game.title}"></td>
-        <td th:text="${game.releaseDate != null ? #dates.format(game.releaseDate, 'yyyy-MM-dd') : ''}"></td>
-        <td th:text="${game.developer}"></td>
-        <td th:text="${game.description}"></td>
-        <td th:text="${game.platform}"></td>
-        <td th:text="${game.hoursPlayed}"></td>
+<!--gif randomizer-->
+<script>
+    const gifs = [
+        "https://mir-s3-cdn-cf.behance.net/project_modules/fs/9bc27292880429.5e569ff84e4d0.gif",
+        "https://i.pinimg.com/originals/08/d9/ef/08d9ef7723de602edefa8af825d9a1e2.gif",
+        "https://i.imgur.com/OACf5cL.gif",
+        "https://i.imgur.com/NW0mK39.gif",
+        "https://i.pinimg.com/originals/82/88/e9/8288e9eec7c66c0790ee546462b8e204.gif"
+    ];
 
-        <!--    buttons for adding and deleting    -->
-        <td>
-            <form th:action="@{/edit/{id}(id=${game.gameID})}" method="get" style="display:inline">
-                <button type="submit">Edit</button>
-            </form>
-
-            <form th:action="@{/delete/{id}(id=${game.gameID})}" method="get" style="display:inline">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-
-    </tr>
-    </tbody>
-</table>
-
-<a th:href="@{/add}"><button>Add Game</button></a>
+    const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
+    document.body.style.backgroundImage = `url('${randomGif}')`;
+</script>
 
 </body>
 </html>
-
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th, td {
-        padding: 10px 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-</style>
