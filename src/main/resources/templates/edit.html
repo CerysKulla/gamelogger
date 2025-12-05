@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit game</title>
+</head>
+<body>
+
+<h1>Edit</h1>
+
+<!--Form contents-->
+<div>
+    <form th:action="@{/update}" th:object="${game}" method="post">
+        <input type="hidden" th:field="*{gameID}" />
+
+        <div class="form-content">
+            <label>Game Title: </label>
+            <input type="text" placeholder="Game Title"  th:field="*{title}"/>
+
+
+            <label>Release Date: </label>
+            <input type="date"  th:field="*{releaseDate}"/>
+
+            <label>Developer: </label>
+            <input type="text" th:field="*{developer}"/>
+
+            <label>Description: </label>
+            <input type="text" th:field="*{description}"/>
+
+            <label>Platform: </label>
+            <input type="text" th:field="*{platform}"/>
+
+            <label>Hours Played: </label>
+            <input type="number" th:field="*{hoursPlayed}"/>
+
+            <button type="submit">Update game</button>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>
+
+
+<!--Styling-->
+<style>
+    .form-content{
+        max-width: 600px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+</style>

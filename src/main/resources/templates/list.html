@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Game Backlog List</title>
@@ -30,19 +30,29 @@
         <th>Actions</th>
     </tr>
     </thead>
+    <tbody>
     <tr th:each="game, iterStat : ${games}">
         <td th:text="${iterStat.count}"></td>
         <td th:text="${game.title}"></td>
-        <td th:text="${game.description}"></td>
-        <td th:text="${#dates.format(game.releaseDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${game.releaseDate != null ? #dates.format(game.releaseDate, 'yyyy-MM-dd') : ''}"></td>
         <td th:text="${game.developer}"></td>
+        <td th:text="${game.description}"></td>
         <td th:text="${game.platform}"></td>
         <td th:text="${game.hoursPlayed}"></td>
 
-<!--    buttons for adding and deleting    -->
-        <td ><button>Edit game</button></td>
-        <td ><a th:href="@{/delete/{id}(id=${game.gameID})}" style="text-decoration: none"><button type="button">Delete game</button></a></td>
+        <!--    buttons for adding and deleting    -->
+        <td>
+            <form th:action="@{/edit/{id}(id=${game.gameID})}" method="get" style="display:inline">
+                <button type="submit">Edit</button>
+            </form>
+
+            <form th:action="@{/delete/{id}(id=${game.gameID})}" method="get" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+
     </tr>
+    </tbody>
 </table>
 
 <a th:href="@{/add}"><button>Add Game</button></a>
@@ -62,4 +72,3 @@
         border-bottom: 1px solid #ddd;
     }
 </style>
->

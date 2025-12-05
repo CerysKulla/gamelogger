@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class GameController {
@@ -49,6 +50,25 @@ public class GameController {
     @GetMapping("/delete/{id}")
     public String deleteGame(@PathVariable Integer id) {
         gameService.deleteGame(id);
+        return "redirect:/list";
+    }
+
+//    Edit
+    @GetMapping("/edit/{id}")
+    public String editGame(@PathVariable Integer id, Model model) {
+        Optional<Game> optinalGame =  gameService.getGameById(id);
+
+        if (optinalGame.isPresent()) {
+            model.addAttribute("game", optinalGame.get());
+            return "edit";
+        }
+        return "redirect:/list";
+    }
+
+    @PostMapping("/update")
+    public String updateGame(@ModelAttribute Game game) {
+        game.setGameID(game.getGameID());
+        gameService.updateGame(game);
         return "redirect:/list";
     }
 

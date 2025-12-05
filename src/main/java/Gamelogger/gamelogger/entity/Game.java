@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 //JPA Entity
@@ -25,8 +26,7 @@ public class Game {
     private String title;
 
     @Column(name = "release_date")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "MM-dd-yyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date releaseDate;
 
     @Column(name = "developer", length = 255)
