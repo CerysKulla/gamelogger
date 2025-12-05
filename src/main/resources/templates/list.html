@@ -162,14 +162,19 @@
             box-shadow: 4px 4px 0px black;
 
             opacity: 0;
-            animation: fadeInButton 1.5s ease-in forwards;
-            animation-delay: 2s;
+            animation: fadeInButton 1.5s ease-in forwards, zoomPulse 1.5s ease-in-out infinite;
+            animation-delay: 2s, 3.5s;
         }
 
         @keyframes fadeInButton {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
+
+        @keyframes zoomPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
 
         .add-btn:hover {
             background-color: #708238;
