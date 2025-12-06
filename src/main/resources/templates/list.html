@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Game Backlog List</title>
 
-
+    <!-- retro video game font -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <style>
@@ -14,13 +14,11 @@
             margin: 0;
             padding: 20px;
             color: #fff;
+            background: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/9bc27292880429.5e569ff84e4d0.gif') no-repeat center center fixed;
+            background-size: cover;
 
             opacity: 0;
             animation: fadeIn 1.5s ease-in forwards;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
         }
 
         @keyframes fadeIn {
@@ -38,7 +36,7 @@
             text-shadow: 4px 4px 0px black, 6px 6px 0px #0078d7;
         }
 
-
+        /* overlay container with black border */
         .overlay {
             background: rgba(0,0,0,0.6);
             padding: 20px;
@@ -89,7 +87,7 @@
             transform: scale(1.05);
         }
 
-        /* table styling */
+        /* Table styling */
         table {
             border-collapse: collapse;
             width: 100%;
@@ -134,7 +132,7 @@
             transform: scale(1.1);
         }
 
-        /* delete button */
+        /* Delete button */
         .delete-btn {
             background-color: #dc3545;
             color: white;
@@ -145,7 +143,7 @@
             transform: scale(1.1);
         }
 
-        /* add game button */
+        /* qdd Game button */
         .add-btn {
             display: block;
             margin: 40px auto;
@@ -163,7 +161,7 @@
 
             opacity: 0;
             animation: fadeInButton 1.5s ease-in forwards, zoomPulse 1.5s ease-in-out infinite;
-            animation-delay: 2s, 3.5s;
+            animation-delay: 2s, 3.5S;
         }
 
         @keyframes fadeInButton {
@@ -172,13 +170,14 @@
         }
 
         @keyframes zoomPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.1); }
             100% { transform: scale(1); }
+        }
 
         .add-btn:hover {
-            background-color: #708238;
-            transform: scale(1.1);
+            background-color: #808000
+            transform: scale(1.2);
         }
     </style>
 </head>
@@ -187,7 +186,7 @@
 <div class="overlay">
     <h1>Game Backlog List</h1>
 
-    <!-- search bar -->
+    <!-- Search bar -->
     <form th:action="@{/list}" method="get">
         <input type="text" name="keyword" placeholder="Search game title" th:value="${keyword}"/>
         <button type="submit">Search</button>
@@ -231,19 +230,9 @@
 
 <a th:href="@{/add}"><button class="add-btn">Add Game</button></a>
 
-<!--gif randomizer-->
-<script>
-    const gifs = [
-        "https://mir-s3-cdn-cf.behance.net/project_modules/fs/9bc27292880429.5e569ff84e4d0.gif",
-        "https://i.pinimg.com/originals/08/d9/ef/08d9ef7723de602edefa8af825d9a1e2.gif",
-        "https://i.imgur.com/OACf5cL.gif",
-        "https://i.imgur.com/NW0mK39.gif",
-        "https://i.pinimg.com/originals/82/88/e9/8288e9eec7c66c0790ee546462b8e204.gif"
-    ];
-
-    const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
-    document.body.style.backgroundImage = `url('${randomGif}')`;
-</script>
-
 </body>
 </html>
+
+
+
+
